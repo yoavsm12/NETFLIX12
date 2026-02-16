@@ -10,7 +10,7 @@ public class Main {
     public static String[] featureNames;
 
     public static void main(String[] args) {
-        loadData("movies.csv");
+        loadData("C:\\Users\\yoavs\\Downloads\\movies.csv");
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -25,22 +25,28 @@ public class Main {
             System.out.print("בחר אפשרות: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    System.out.print("הכנס שם של סרט (למשל The Matrix): ");
-                    String movieName = scanner.nextLine();
-                    Movie selectedMovie = findMovieByName(movieName);
+                    System.out.println("\n--- רשימת הסרטים ---");
+                    for (int i = 0; i < allMovies.size(); i++) {
+                        System.out.println(i + ". " + allMovies.get(i).getTitle());
+                    }
 
-                    if (selectedMovie != null) {
+                    System.out.print("\nהכנס את מספר הסרט לבחירה: ");
+                    int movieIndex = scanner.nextInt();
+
+                    if (movieIndex >= 0 && movieIndex < allMovies.size()) {
+                        Movie selectedMovie = allMovies.get(movieIndex);
+                        System.out.println("בחרת בסרט: " + selectedMovie.getTitle());
+
                         List<String> recommendations = getRecommendations(allMovies, selectedMovie.getAttributes(), weights, 3);
-                        System.out.println("הסרטים הכי דומים ל-" + movieName + " הם:");
+                        System.out.println("הסרטים הכי דומים הם:");
                         for (String rec : recommendations) {
                             System.out.println(rec);
                         }
                     } else {
-                        System.out.println("שגיאה: הסרט לא נמצא במאגר.");
+                        System.out.println("מספר לא תקין.");
                     }
                     break;
 
